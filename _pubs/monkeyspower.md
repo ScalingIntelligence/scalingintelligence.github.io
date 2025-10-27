@@ -21,6 +21,7 @@ authors:
   - name: Sanmi Koyejo
     affiliation: Stanford University
 venue: icml
+venue_txt: Oral
 year: 2025
 date: 2025-02-24
 month: February

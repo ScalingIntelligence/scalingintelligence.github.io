@@ -12,7 +12,8 @@ authors:
     affiliation: Google DeepMind
   - name: Christopher D. Manning
     affiliation: Stanford University
-venue: preprint
+venue: colm
+venue_txt:
 year: 2025
 date: 2025-04-28
 month: April

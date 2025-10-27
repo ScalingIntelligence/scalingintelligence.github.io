@@ -49,10 +49,15 @@ layout: page
             {% endfor %}
             </p>
             <p class="venue">
-              {% if pub.preprint %}
+              {% if pub.venue == "preprint" and pub.venue_txt and pub.venue_txt != '' %}
+                {{pub.venue_txt}}
+              {% elsif pub.preprint %}
                 {{pub.preprint.server}}: {{pub.preprint.id}}
               {% else %}
                 {{site.data.venues[pub.venue].full}}, {{pub.year}}
+              {% endif %}
+              {% if pub.venue != "preprint" and pub.venue_txt and pub.venue_txt != '' %}
+                <br>{{pub.venue_txt}}
               {% endif %}
             </p>
             {% if pub.award %}

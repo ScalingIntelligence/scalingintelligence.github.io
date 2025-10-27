@@ -27,6 +27,7 @@ authors:
   - name: Christopher Ré
     affiliation: Stanford
 venue: preprint
+venue_txt: ES-FoMo (Oral) III @ICML 2025
 year: 2025
 date: 2025-06-06
 has_pdf: true

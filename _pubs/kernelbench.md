@@ -15,6 +15,7 @@ authors:
     affiliation: Stanford
   - key: azaliamirhoseini
 venue: icml
+venue_txt: DL4C (Best Paper) & SSI-FM @ ICLR 2025
 year: 2025
 date: 2025-02-18
 has_pdf: true

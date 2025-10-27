@@ -21,6 +21,7 @@ authors:
     affiliation: Stanford
   - key: azaliamirhoseini
 venue: icml
+venue_txt: SSI-FM (Oral) @ ICLR 2025
 year: 2024
 date: 2024-09-23
 has_pdf: true
