@@ -11,6 +11,7 @@ authors:
   - name: Amin Saberi
     affiliation: Stanford University
 venue: preprint
+venue_txt: MAS@ICML 2025
 year: 2024
 date: 2024-04-23
 has_pdf: true

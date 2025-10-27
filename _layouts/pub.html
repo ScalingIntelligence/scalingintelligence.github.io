@@ -97,15 +97,26 @@
 
           <div id="metadata">
             {% if page.venue != "none" %}
-              <p>
-                <span id="venue">
-                  {% if page.preprint %}
-                    {{page.preprint.server}}: {{page.preprint.id}}
-                  {% else %}
-                    {{site.data.venues[page.venue].full | default:page.venue}}, {{page.year}}
-                  {% endif %}
-                </span>
-              </p>
+              {% if page.venue == "preprint" and page.venue_txt and page.venue_txt != '' %}
+                <p>
+                  <span id="venue">{{page.venue_txt}}</span>
+                </p>
+              {% else %}
+                <p>
+                  <span id="venue">
+                    {% if page.preprint %}
+                      {{page.preprint.server}}: {{page.preprint.id}}
+                    {% else %}
+                      {{site.data.venues[page.venue].full | default:page.venue}}, {{page.year}}
+                    {% endif %}
+                  </span>
+                </p>
+                {% if page.venue_txt and page.venue_txt != '' %}
+                  <p>
+                    <span class="venue-extra">{{page.venue_txt}}</span>
+                  </p>
+                {% endif %}
+              {% endif %}
             {% endif %}
             {% if page.award %}
               <p class="award">

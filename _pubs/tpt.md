@@ -7,6 +7,7 @@ authors:
     affiliation: Stanford University
   - key: azaliamirhoseini
 venue: lad
+venue_txt: SSI-FM @ICLR 2025
 year: 2025
 date: 2025-04-25
 month: April

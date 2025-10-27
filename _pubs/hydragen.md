@@ -14,6 +14,7 @@ authors:
     affiliation: Stanford
   - key: azaliamirhoseini
 venue: preprint
+venue_txt: ES-FoMo-II @ICML 2024 
 year: 2024
 date: 2024-02-07
 has_pdf: true
