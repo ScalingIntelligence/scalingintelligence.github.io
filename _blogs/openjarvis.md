@@ -210,7 +210,7 @@ jarvis ask "What is the capital of France?"
 
 <h2>🙏 Acknowledgements</h2>
 
-<p>We are grateful to <a href="https://ollama.com/">Ollama</a>, <a href="https://research.ibm.com/">IBM Research</a>, <a href="https://laudeinstitute.com/">Laude Institute</a>, <a href="https://marlowe.stanford.edu/">Stanford Marlowe</a>, <a href="https://hai.stanford.edu/">Stanford HAI</a>, <a href="https://cloud.google.com/">Google Cloud Platform</a>, and <a href="https://lambdalabs.com/">Lambda Labs</a> for their generous support.</p>
+<p>We are grateful to <a href="https://ollama.com/">Ollama</a>, <a href="https://research.ibm.com/">IBM Research</a>, <a href="https://laudeinstitute.com/">Laude Institute</a>, <a href="https://marlowe.stanford.edu/">Stanford Marlowe</a>, <a href="https://hai.stanford.edu/">Stanford HAI</a>, <a href="https://cloud.google.com/">Google Cloud Platform</a>, <a href="https://lambdalabs.com/">Lambda Labs</a>, <a href="https://nlp.stanford.edu/">Stanford NLP</a>, and <a href="https://ai.stanford.edu/">Stanford AI Lab</a> for their generous support.</p>
 
 <p>OpenJarvis is part of <a href="https://hazyresearch.stanford.edu/blog/2025-11-11-ipw">Intelligence Per Watt</a>, a research initiative studying the efficiency of on-device AI systems. The project is developed at <a href="https://hazyresearch.stanford.edu/">Hazy Research</a> and the <a href="https://scalingintelligence.stanford.edu/">Scaling Intelligence Lab</a> at Stanford SAIL.</p>
 
