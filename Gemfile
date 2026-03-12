@@ -35,5 +35,12 @@ gem "wdm", "~> 0.1.1", :platforms => [:mingw, :x64_mingw, :mswin]
 
 gem "nokogiri", "~> 1.16"
 gem "webrick"
+gem "csv"
+gem "base64"
+gem "bigdecimal"
+gem "observer"
+gem "mutex_m"
+gem "drb"
+gem "nkf"
 gem "htmlbeautifier"
 gem "logger"

@@ -9,9 +9,9 @@ authors:
     affiliation: Stanford University
   - name: John Hennessy
     affiliation: Stanford University
-  - key: azaliamirhoseini
-    affiliation: Stanford University
   - name: Christopher Ré
+    affiliation: Stanford University
+  - key: azaliamirhoseini
     affiliation: Stanford University
 venue: none
 year: 2025
@@ -21,7 +21,6 @@ tags:
   - systems
   - personal AI
   - on-device inference
-teaser: "OpenJarvis is an open-source framework for personal AI agents that runs entirely on-device. It provides shared primitives for building on-device agents, efficiency-aware evaluations, and a learning loop that improves models using local trace data."
 materials:
   - name: GitHub
     url: https://github.com/open-jarvis/OpenJarvis
@@ -33,19 +32,20 @@ materials:
 
 <div class="post-content">
 
-<p>
+<img src="/imgs/blog/openjarvis/banner.png" alt="OpenJarvis" style="width: 100%; height: auto;">
+<p><em><strong>TL;DR:</strong> OpenJarvis is an open-source framework for personal AI agents that runs entirely on-device. It provides shared primitives for building on-device agents, efficiency-aware evaluations, and a learning loop that improves models using local trace data.</em></p>
+
+<p style="text-align: center;">
 💻 <a href="https://github.com/open-jarvis/OpenJarvis">GitHub</a> &nbsp;|&nbsp;
 📖 <a href="https://open-jarvis.github.io/OpenJarvis/">Docs</a> &nbsp;|&nbsp;
 💬 <a href="https://discord.gg/3DEGU5Ce">Discord</a>
 </p>
 
-<p>🚨 Download OpenJarvis today and top the <a href="https://open-jarvis.github.io/OpenJarvis/leaderboard/">leaderboard</a> for a chance to win a Mac Mini! 🚨</p>
+<p style="text-align: center;"><strong>🚨 Download OpenJarvis today and top the <a href="https://open-jarvis.github.io/OpenJarvis/leaderboard/">ENERGY leaderboard</a> for a chance to win a Mac Mini! 🚨</strong></p>
 
-<img src="/imgs/blog/openjarvis/fig_1.png" alt="OpenJarvis Architecture: The five primitives of OpenJarvis (Intelligence, Engine, Agents, Tools & Memory, and Learning) form a composable, hardware-aware stack for on-device personal AI." style="width: 100%; height: auto;">
+<hr>
 
-<p>In the 1970s and 80s, computing moved from mainframes to personal computers. Not because PCs were more powerful, but because they became efficient enough for what people actually needed.</p>
-
-<p>AI is reaching a similar moment.</p>
+<p>In the 1970s and 80s, computing moved from mainframes to personal computers. Not because PCs were more powerful, but because they became efficient enough for what people actually needed. AI is reaching a similar moment.</p>
 
 <p>In our recent <a href="https://arxiv.org/abs/2511.07885">Intelligence Per Watt study</a>, we found that local language models and local accelerators can accurately service 88.7% of single-turn chat and reasoning queries at interactive latencies, with intelligence efficiency improving 5.3× from 2023 to 2025.</p>
 
@@ -61,23 +61,31 @@ materials:
 
 <p>The goal is simple: make it possible to build personal AI agents that run locally by default, calling the cloud only when truly necessary. OpenJarvis aims to be both a research platform and production foundation for local AI, in the spirit of PyTorch.</p>
 
-<p><strong>🏢 OpenJarvis: The Local-First Personal AI Stack</strong></p>
+<hr>
+
+<h2>🏢 OpenJarvis: The Local-First Personal AI Stack</h2>
 
 <p>OpenJarvis emerged from a simple question: what's standing in the way of personal AI running locally today?  We believe the answer comes down to three missing pieces in today's local AI systems:</p>
 
-<p><strong>Shared abstractions.</strong> Teams assemble bespoke stacks, choosing independently among model servers, orchestration frameworks, memory stores, tool interfaces, and adaptation pipelines. The result is duplicated effort and brittle, non-interoperable systems. There is no agreed-upon "local AI software stack" the way there is for web development or mobile apps.</p>
+<ul>
+<li><strong>Shared abstractions.</strong> Teams assemble bespoke stacks, choosing independently among model servers, orchestration frameworks, memory stores, tool interfaces, and adaptation pipelines. The result is duplicated effort and brittle, non-interoperable systems. There is no agreed-upon "local AI software stack" the way there is for web development or mobile apps.</li>
 
-<p><strong>Efficiency-aware evaluations</strong>: Systems are tuned for task quality alone, even though on-device deployments must jointly satisfy constraints on latency, energy, memory footprint, and dollar cost. Efficiency isn't a nice-to-have on a laptop running on battery; it's a hard requirement.</p>
+<li><strong>Efficiency-aware evaluations</strong>: Systems are tuned for task quality alone, even though on-device deployments must jointly satisfy constraints on latency, energy, memory footprint, and dollar cost. Efficiency isn't a nice-to-have on a laptop running on battery; it's a hard requirement.</li>
 
-<p><strong>Closed-loop optimization</strong> Because most AI systems run in the cloud, the pieces needed for local improvement don't exist: trace data isn't available, model weights are closed, and the runtime isn't tunable. This makes it nearly impossible to study or build personal AI agents that improve over time.</p>
+<li><strong>Closed-loop optimization</strong> Because most AI systems run in the cloud, the pieces needed for local improvement don't exist: trace data isn't available, model weights are closed, and the runtime isn't tunable. This makes it nearly impossible to study or build personal AI agents that improve over time.</li>
+</ul>
 
 <p>To close these gaps, we built OpenJarvis. OpenJarvis is the open-source stack for <strong>personal AI agents that runs entirely on-device.</strong> Designed to serve as both a research platform and deployment-ready infrastructure, OpenJarvis does three things:</p>
 
-<p>Defines a <strong>set of composable primitives</strong> that replace ad hoc integration with an opinionated framework of five primitives — Intelligence, Engine, Agents, Tools & Memory, and Learning — providing the shared abstractions the ecosystem currently lacks. These primitives can be studied individually or as an integrated whole.</p>
+<ul>
+<li>Defines a <strong>set of composable primitives</strong> that replace ad hoc integration with an opinionated framework of five primitives — Intelligence, Engine, Agents, Tools & Memory, and Learning — providing the shared abstractions the ecosystem currently lacks. These primitives can be studied individually or as an integrated whole.</li>
 
-<p>Makes <strong>efficiency a first-class evaluation target</strong> by tracking energy, dollar cost, FLOPs, latency, and related system metrics alongside accuracy. These measurements are essential for optimizing edge deployments, where resource constraints are fundamental.</p>
+<li>Makes <strong>efficiency a first-class evaluation target</strong> by tracking energy, dollar cost, FLOPs, latency, and related system metrics alongside accuracy. These measurements are essential for optimizing edge deployments, where resource constraints are fundamental.</li>
 
-<p><strong>Provides an optimization harness for deploying optimization strategies</strong> across the complete local AI stack: 1) model weights, 2) LM prompts, 3) agentic logic, and 4) inference engine. By learning from local trace data, the harness applies the best optimization strategies to-date while giving researchers a testbed to explore new approaches tailored to the trace signatures that distinguish personal AI (i.e., long-horizon sessions, persistent cross-session context, non-stationary user preferences).</p>
+<li><strong>Provides an optimization harness for deploying optimization strategies</strong> across the complete local AI stack: 1) model weights, 2) LM prompts, 3) agentic logic, and 4) inference engine. By learning from local trace data, the harness applies the best optimization strategies to-date while giving researchers a testbed to explore new approaches tailored to the trace signatures that distinguish personal AI (i.e., long-horizon sessions, persistent cross-session context, non-stationary user preferences).</li>
+</ul>
+
+<hr>
 
 <h2>🧱 Primitives for On-Device AI</h2>
 
@@ -94,7 +102,7 @@ materials:
 
 <h3>⚙️ Engine: Hardware-Aware Inference</h3>
 
-<p>The <strong>Engine</strong> primitive is the execution layer: the inference backend that determines how models actually run on a device. Local inference today is powerful but fragmented, with backends such as <a href="https://ollama.com/">Ollama</a>, <a href="https://github.com/vllm-project/vllm">vLLM</a>, <a href="https://github.com/sgl-project/sglang">SGLang</a>, <a href="https://github.com/ggml-org/llama.cpp">llama.cpp</a>, <a href="https://github.com/apple/python-apple-fm-sdk">Apple Foundation Models</a>, <a href="https://github.com/exo-explore/exo">Exo</a>, <a href="https://github.com/NexaAI/nexa-sdk">Nexa</a>, and <a href="https://github.com/UzuAI/uzu-sdk">Mirai Uzu</a> each offering different strengths depending on platform, memory, and performance constraints.</p>
+<p>The <strong>Engine</strong> primitive is the execution layer: the inference backend that determines how models actually run on a device. Local inference today is powerful but fragmented, with backends such as <a href="https://ollama.com/">Ollama</a>, <a href="https://github.com/vllm-project/vllm">vLLM</a>, <a href="https://github.com/sgl-project/sglang">SGLang</a>, <a href="https://github.com/ggml-org/llama.cpp">llama.cpp</a>, <a href="https://github.com/apple/python-apple-fm-sdk">Apple Foundation Models</a>, <a href="https://github.com/exo-explore/exo">Exo</a>, <a href="https://github.com/NexaAI/nexa-sdk">Nexa</a>, and <a href="https://github.com/trymirai/uzu">Mirai Uzu</a> each offering different strengths depending on platform, memory, and performance constraints.</p>
 
 <p>OpenJarvis provides a hardware-aware interface over that fragmentation. With commands like <code>jarvis init</code>, it detects the user's system and recommends an engine and model configuration suited to the available hardware; with <code>jarvis doctor</code>, it helps keep that setup healthy over time.</p>
 
@@ -116,7 +124,9 @@ materials:
 
 <p>OpenJarvis turns that idea into an operational loop. Its learning layer uses personal traces to synthesize training data, refine agent behavior, and improve model selection over time, with commands like <code>jarvis optimize</code> packaging that process into a usable workflow.</p>
 
-<p><strong>⚡ Efficiency as a First-Class Metric</strong></p>
+<hr>
+
+<h2>⚡ Efficiency as a First-Class Metric</h2>
 
 <p>Most AI frameworks treat efficiency as an afterthought. OpenJarvis inverts this: <strong>energy and dollar cost are first-class design constraints alongside accuracy from the start.</strong></p>
 
@@ -125,17 +135,23 @@ materials:
 <img src="/imgs/blog/openjarvis/fig_2.png" alt="OpenJarvis benchmarking CLI showing latency, throughput, and energy metrics" style="width: 100%; height: auto;">
 <p><em>Figure 2: The OpenJarvis dashboard provides real-time visibility into inference latency, energy consumption, cost savings, and model performance across local and cloud configurations.</em></p>
 
+<hr>
+
 <h2>🔒 Learning from Local Traces</h2>
 
 <p>Because execution is local and interaction traces remain on-device, OpenJarvis captures rich, structured trace data across every layer of the stack — from raw inference telemetry and prompt–completion pairs to agent decision trajectories and tool call sequences. This local trace infrastructure enables closed-loop optimization across four layers of the stack:</p>
 
-<p><strong>Model weights</strong> — gradient-based updates including SFT, GRPO, DPO, and other reinforcement learning from human feedback methods that fine-tune local model parameters directly.</p>
+<ul>
+<li><strong>Model weights</strong> — gradient-based updates including SFT, GRPO, DPO, and other reinforcement learning from human feedback methods that fine-tune local model parameters directly.</li>
 
-<p><strong>LM prompts</strong> — prompt optimization strategies such as DSPy that automatically refine instructions and few-shot examples to improve task performance without modifying model weights.</p>
+<li><strong>LM prompts</strong> — prompt optimization strategies such as DSPy that automatically refine instructions and few-shot examples to improve task performance without modifying model weights.</li>
 
-<p><strong>Agentic logic</strong> — agent-level optimization approaches like GEPA that improve how agents decompose tasks, select tools, and coordinate sub-agents.</p>
+<li><strong>Agentic logic</strong> — agent-level optimization approaches like GEPA that improve how agents decompose tasks, select tools, and coordinate sub-agents.</li>
 
-<p><strong>Inference engine</strong> — engine-level tuning including quantization selection, batch scheduling, and hardware-specific kernel configuration.</p>
+<li><strong>Inference engine</strong> — engine-level tuning including quantization selection, batch scheduling, and hardware-specific kernel configuration.</li>
+</ul>
+
+<hr>
 
 <h2>🚀 What Can You Do With OpenJarvis?</h2>
 
@@ -144,11 +160,17 @@ materials:
 <img src="/imgs/blog/openjarvis/fig_3.png" alt="OpenJarvis browser dashboard with webchat, energy metrics, and cost comparison" style="width: 100%; height: auto;">
 <p><em>Figure 3: OpenJarvis supports interaction via CLI, browser dashboard, desktop app, and 26+ messaging channels.</em></p>
 
-<p><strong>Personal AI tasks.</strong> Email triage, morning briefings, daily digests, and scheduled summaries that run on a cron schedule without cloud dependencies. Point OpenJarvis at a folder of papers or notes and it builds a local knowledge base for question answering and research. Connect it to your messaging platforms and interact through iMessage, Telegram, WhatsApp, or whatever you already use. Critically, all of your personal details, documents, messages, and preferences stay on your device, unlike cloud-based systems that send everything to external servers.</p>
+<p>Here are some ways to use it!</p>
 
-<p><strong>Traditional LM workloads.</strong> Open-ended chat, mathematical and scientific reasoning, code generation, knowledge-intensive question answering, and structured output generation, all running locally with energy and cost tracked per query.</p>
+<ul>
+<li><strong>Personal AI tasks.</strong> Email triage, morning briefings, daily digests, and scheduled summaries that run on a cron schedule without cloud dependencies. Point OpenJarvis at a folder of papers or notes and it builds a local knowledge base for question answering and research. Connect it to your messaging platforms and interact through iMessage, Telegram, WhatsApp, or whatever you already use. Critically, all of your personal details, documents, messages, and preferences stay on your device, unlike cloud-based systems that send everything to external servers.</li>
 
-<p><strong>Agentic and long-horizon tasks.</strong> The scheduler enables cron-based automation ("every morning at 7am, pull my calendar, check my email, and prepare a briefing") while the agent framework supports multi-step workflows like code review, web research, and document processing pipelines.</p>
+<li><strong>Traditional LM workloads.</strong> Open-ended chat, mathematical and scientific reasoning, code generation, knowledge-intensive question answering, and structured output generation, all running locally with energy and cost tracked per query.</li>
+
+<li><strong>Agentic and long-horizon tasks.</strong> The scheduler enables cron-based automation ("every morning at 7am, pull my calendar, check my email, and prepare a briefing") while the agent framework supports multi-step workflows like code review, web research, and document processing pipelines.</li>
+</ul>
+
+<hr>
 
 <h2>🤝 Get Involved</h2>
 
@@ -156,15 +178,23 @@ materials:
 
 <p>If you are a researcher, developer, or user, we would love to get you involved.</p>
 
-<p><strong>Researchers:</strong> We see major opportunities for further research, including advances in local language models, efficient agent architectures, memory management for on-device systems, and learning approaches that improve with use while preserving privacy. OpenJarvis provides an evaluation harness spanning 30+ benchmarks, and we would love for you to use it to measure and push progress.</p>
+<ul>
+<li><strong>Researchers:</strong> We see major opportunities for further research, including advances in local language models, efficient agent architectures, memory management for on-device systems, and learning approaches that improve with use while preserving privacy. OpenJarvis provides an evaluation harness spanning 30+ benchmarks, and we would love for you to use it to measure and push progress.</li>
 
-<p><strong>Developers:</strong> We encourage you to build on top of OpenJarvis and help us understand where the real bottlenecks are. Which use cases matter most? Where does performance fall short? Please visit our <a href="https://github.com/open-jarvis/OpenJarvis">GitHub</a> to get started. We welcome PRs that expand the ecosystem.</p>
+<li><strong>Developers:</strong> We encourage you to build on top of OpenJarvis and help us understand where the real bottlenecks are. Which use cases matter most? Where does performance fall short? Please visit our <a href="https://github.com/open-jarvis/OpenJarvis">GitHub</a> to get started. We welcome PRs that expand the ecosystem.</li>
 
-<p><strong>Users:</strong> Try it out and tell us what you think. Point it at your files, connect it to your messaging platforms, and let us know what works and what does not. The fastest way to get started is to run <code>pip install openjarvis</code>, then <code>jarvis init</code>. Join us on <a href="https://discord.gg/3DEGU5Ce">discord</a> and share your thoughts!</p>
+<li><strong>Users:</strong> Try it out and tell us what you think. Point it at your files, connect it to your messaging platforms, and let us know what works and what does not. The fastest way to get started is to run <code>pip install openjarvis</code>, then <code>jarvis init</code>. Join us on <a href="https://discord.gg/3DEGU5Ce">discord</a> and share your thoughts!</li>
+</ul>
 
 <p>The fastest way to get started:</p>
 
-<pre><code>pip install openjarvis
+<pre style="background-color: #f5f5f5; padding: 16px; border-radius: 8px; overflow-x: auto;"><code># Install
+git clone https://github.com/open-jarvis/OpenJarvis.git
+cd OpenJarvis
+uv sync                           # core framework
+uv sync --extra server             # + FastAPI server
+
+# Let it Rip!
 jarvis init          # auto-detect hardware, recommend engine
 jarvis doctor        # verify setup
 jarvis ask "What is the capital of France?"
@@ -176,6 +206,8 @@ jarvis ask "What is the capital of France?"
 💬 <a href="https://discord.gg/3DEGU5Ce">Discord</a>
 </p>
 
+<hr>
+
 <h2>🙏 Acknowledgements</h2>
 
 <p>We are grateful to <a href="https://ollama.com/">Ollama</a>, <a href="https://research.ibm.com/">IBM Research</a>, <a href="https://laudeinstitute.com/">Laude Institute</a>, <a href="https://marlowe.stanford.edu/">Stanford Marlowe</a>, <a href="https://hai.stanford.edu/">Stanford HAI</a>, <a href="https://cloud.google.com/">Google Cloud Platform</a>, and <a href="https://lambdalabs.com/">Lambda Labs</a> for their generous support.</p>
@@ -184,8 +216,6 @@ jarvis ask "What is the capital of France?"
 
 <h3>Full Author List</h3>
 
-<p>Jon Saad-Falcon*, Avanika Narayan*, Hakki Orhun Akengin, Herumb Shandilya, Robby Manihani, Gabriel Bo, John Hennessy, Azalia Mirhoseini, Christopher Ré</p>
-
-<p><em>Made by Hazy Research.</em> <a href="https://hazyresearch.stanford.edu/">Learn more about the lab ↗</a></p>
+<p>Jon Saad-Falcon*, Avanika Narayan*, Hakki Orhun Akengin, Herumb Shandilya, Robby Manihani, Gabriel Bo, John Hennessy, Christopher Ré, Azalia Mirhoseini</p>
 
 </div>
