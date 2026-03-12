@@ -14,7 +14,7 @@ authors:
   - key: azaliamirhoseini
     affiliation: Stanford University
 venue: none
-year: 2025
+year: 2026
 date: 2026-03-12
 tags:
   - machine learning
