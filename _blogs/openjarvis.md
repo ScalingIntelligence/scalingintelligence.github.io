@@ -216,6 +216,17 @@ jarvis ask "What is the capital of France?"
 
 <h3>Full Author List</h3>
 
-<p>Jon Saad-Falcon*, Avanika Narayan*, Hakki Orhun Akengin, Herumb Shandilya, Robby Manihani, Gabriel Bo, John Hennessy, Christopher Ré, Azalia Mirhoseini</p>
+<p>Jon Saad-Falcon*, Avanika Narayan*, Herumb Shandilya, Hakki Orhun Akengin, Robby Manihani, Gabriel Bo, John Hennessy, Christopher Ré, Azalia Mirhoseini</p>
+
+<h3>Citation</h3>
+
+<pre style="background-color: #f5f5f5; padding: 16px; border-radius: 8px; overflow-x: auto;"><code>@misc{saadfalcon2026openjarvis,
+  title={OpenJarvis: Personal AI, On Personal Devices},
+  author={Jon Saad-Falcon and Avanika Narayan and Herumb Shandilya and Hakki Orhun Akengin and Robby Manihani and Gabriel Bo and John Hennessy and Christopher R\'{e} and Azalia Mirhoseini},
+  year={2026},
+  howpublished={\url{https://scalingintelligence.stanford.edu/blogs/openjarvis/}},
+  note={Blog post, Scaling Intelligence Lab, Stanford University}
+}
+</code></pre>
 
 </div>
