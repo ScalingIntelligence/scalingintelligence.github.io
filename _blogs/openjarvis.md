@@ -224,8 +224,7 @@ jarvis ask "What is the capital of France?"
   title={OpenJarvis: Personal AI, On Personal Devices},
   author={Jon Saad-Falcon and Avanika Narayan and Herumb Shandilya and Hakki Orhun Akengin and Robby Manihani and Gabriel Bo and John Hennessy and Christopher R\'{e} and Azalia Mirhoseini},
   year={2026},
-  howpublished={\url{https://scalingintelligence.stanford.edu/blogs/openjarvis/}},
-  note={Blog post, Scaling Intelligence Lab, Stanford University}
+  howpublished={\url{https://scalingintelligence.stanford.edu/blogs/openjarvis/}}
 }
 </code></pre>
 
