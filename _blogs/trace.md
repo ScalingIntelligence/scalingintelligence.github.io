@@ -3,10 +3,14 @@ title: "TRACE: Capability-Targeted Agentic Training"
 authors:
   - key: hangookang
     equal: true
+    affiliation: Stanford
   - name: Tarun Suresh
     equal: true
+    affiliation: Stanford
   - key: jonsaadfalcon
+    affiliation: Stanford
   - key: azaliamirhoseini
+    affiliation: Stanford
 tags:
   - Agents
   - Reinforcement Learning
