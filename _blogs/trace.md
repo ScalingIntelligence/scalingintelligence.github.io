@@ -12,7 +12,7 @@ tags:
   - Reinforcement Learning
   - Self-improving AI
 venue: none
-year: 2025
+year: 2026
 date: 2026-04-07
 teaser: "TRACE is an end-to-end system for environment-specific agent self-improvement that automatically identifies the capabilities an agent lacks for an environment and synthesizes targeted training environments to teach them."
 materials:
