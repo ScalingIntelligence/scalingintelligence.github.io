@@ -59,7 +59,9 @@ We evaluate TRACE using Qwen3-30B-A3B on two benchmarks: **&tau;<sup>2</sup>-Ben
 
 ### &tau;<sup>2</sup>-Bench: Pass Rate
 
-<table style="width: 100%; text-align: center;">
+<img src="/imgs/blog/trace/trace_tau_result.png" alt="Main result of TRACE on tau^2-bench" style="width: 100%; height: auto;">
+
+<!-- <table style="width: 100%; text-align: center;">
 <thead>
 <tr>
 <th style="text-align: left;">Approach</th>
@@ -77,11 +79,13 @@ We evaluate TRACE using Qwen3-30B-A3B on two benchmarks: **&tau;<sup>2</sup>-Ben
 <tr><td style="text-align: left;">Single Capability (Ours)</td><td>34.0</td><td>43.0</td><td>40.3</td></tr>
 <tr style="font-weight: bold;"><td style="text-align: left;">TRACE (Ours)</td><td>44.0</td><td>48.2</td><td>47.0</td></tr>
 </tbody>
-</table>
+</table> -->
 
 ### ToolSandBox: Perfect Score & Mean Similarity
 
-<table style="width: 100%; text-align: center;">
+<img src="/imgs/blog/trace/trace_tsb_result.png" alt="Main result of TRACE on ToolSandBox" style="width: 100%; height: auto;">
+
+<!-- <table style="width: 100%; text-align: center;">
 <thead>
 <tr>
 <th style="text-align: left;">Model</th>
@@ -98,7 +102,7 @@ We evaluate TRACE using Qwen3-30B-A3B on two benchmarks: **&tau;<sup>2</sup>-Ben
 <tr><td style="text-align: left;">Single Capability (Ours)</td><td>22/129</td><td>0.514</td></tr>
 <tr style="font-weight: bold;"><td style="text-align: left;">TRACE (Ours)</td><td>26/129</td><td>0.552</td></tr>
 </tbody>
-</table>
+</table> -->
 
 <br>
 
