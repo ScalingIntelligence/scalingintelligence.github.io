@@ -5,7 +5,6 @@ authors:
     equal: true
   - name: Tarun Suresh
     equal: true
-    affiliation: Stanford University
   - key: jonsaadfalcon
   - key: azaliamirhoseini
 venue: preprint
