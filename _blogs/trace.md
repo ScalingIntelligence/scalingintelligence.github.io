@@ -59,7 +59,7 @@ We evaluate TRACE using Qwen3-30B-A3B on two benchmarks: **&tau;<sup>2</sup>-Ben
 
 ### &tau;<sup>2</sup>-Bench: Pass Rate
 
-<img src="/imgs/blog/trace/trace_tau_result.png" alt="Main result of TRACE on tau^2-bench" style="width: 100%; height: auto;">
+<img src="/imgs/blog/trace/trace_tau_result2.png" alt="Main result of TRACE on tau^2-bench" style="width: 100%; height: auto;">
 
 <!-- <table style="width: 100%; text-align: center;">
 <thead>
@@ -83,7 +83,7 @@ We evaluate TRACE using Qwen3-30B-A3B on two benchmarks: **&tau;<sup>2</sup>-Ben
 
 ### ToolSandBox: Perfect Score & Mean Similarity
 
-<img src="/imgs/blog/trace/trace_tsb_result.png" alt="Main result of TRACE on ToolSandBox" style="width: 100%; height: auto;">
+<img src="/imgs/blog/trace/trace_tsb_result2.png" alt="Main result of TRACE on ToolSandBox" style="width: 100%; height: auto;">
 
 <!-- <table style="width: 100%; text-align: center;">
 <thead>
