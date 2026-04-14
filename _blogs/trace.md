@@ -24,7 +24,7 @@ materials:
     url: https://github.com/ScalingIntelligence/TRACE
     type: code
   - name: Paper
-    url: https://arxiv.org/abs/2504.04736
+    url: https://arxiv.org/abs/2604.05336
     type: file-pdf
 ---
 
