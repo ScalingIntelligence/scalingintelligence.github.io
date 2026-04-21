@@ -193,6 +193,12 @@ ionstoica:
   title: Professor
   not_current: True
 
+chelseafinn:
+  name: Chelsea Finn
+  url: https://ai.stanford.edu/~cbfinn/
+  title: Professor
+  not_current: True
+
 aakankshash:
     name: Aakanksha Chowdhery
     url: https://www.achowdhery.com/
