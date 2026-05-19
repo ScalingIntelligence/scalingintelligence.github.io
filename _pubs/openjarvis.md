@@ -16,7 +16,7 @@ authors:
 venue: preprint
 year: 2026
 date: 2026-03-12
-has_pdf: false
+has_pdf: true
 doi: 10.48550/arXiv.2605.17172
 tags:
   - machine learning
