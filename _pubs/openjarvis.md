@@ -7,7 +7,24 @@ authors:
   - name: Avanika Narayan
     equal: true
     affiliation: Stanford University
-  - name: John Hennessy
+  - key: robbymanihani
+    affiliation: Stanford University
+  - key: tanvirbhathal
+    affiliation: Stanford University
+  - key: herumbshandilya
+    affiliation: Stanford University
+  - key: orhunakengin
+    name: Hakki Orhun Akengin
+    affiliation: Stanford University
+  - name: Gabriel Bo
+    affiliation: Stanford University
+  - name: Andrew Park
+    affiliation: Stanford University
+  - name: Matthew Hart
+    affiliation: Stanford University
+  - key: caiacostello
+    affiliation: Stanford University
+  - name: Chuan Li
     affiliation: Stanford University
   - name: Christopher Ré
     affiliation: Stanford University
@@ -16,8 +33,18 @@ authors:
 venue: preprint
 year: 2026
 date: 2026-03-12
-has_pdf: false
+has_pdf: true
 doi: 10.48550/arXiv.2605.17172
+bibtex_raw: |
+  @misc{saadfalcon2026openjarvispersonalaipersonal,
+        title={OpenJarvis: Personal AI, On Personal Devices},
+        author={Jon Saad-Falcon and Avanika Narayan and Robby Manihani and Tanvir Bhathal and Herumb Shandilya and Hakki Orhun Akengin and Gabriel Bo and Andrew Park and Matthew Hart and Caia Costello and Chuan Li and Christopher Ré and Azalia Mirhoseini},
+        year={2026},
+        eprint={2605.17172},
+        archivePrefix={arXiv},
+        primaryClass={cs.LG},
+        url={https://arxiv.org/abs/2605.17172},
+  }
 tags:
   - machine learning
   - systems
