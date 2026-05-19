@@ -22,6 +22,9 @@ tags:
   - personal AI
   - on-device inference
 materials:
+  - name: Paper
+    url: https://arxiv.org/abs/2605.17172
+    type: file-pdf
   - name: GitHub
     url: https://github.com/open-jarvis/OpenJarvis
     type: code

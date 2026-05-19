@@ -70,7 +70,7 @@ layout: page
                 <a href="{{pub.external_url}}">
                   {% if pub.preprint %}Preprint{% else %}Article{% endif %}
                 </a>
-              {% else %}
+              {% elsif pub.has_pdf != false %}
                 <a href="/pubs/{{pub.slug}}.pdf">PDF</a>
               {% endif %}
               {% for material in pub.materials %}
