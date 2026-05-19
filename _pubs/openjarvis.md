@@ -7,7 +7,24 @@ authors:
   - name: Avanika Narayan
     equal: true
     affiliation: Stanford University
-  - name: John Hennessy
+  - key: robbymanihani
+    affiliation: Stanford University
+  - key: tanvirbhathal
+    affiliation: Stanford University
+  - key: herumbshandilya
+    affiliation: Stanford University
+  - key: orhunakengin
+    name: Hakki Orhun Akengin
+    affiliation: Stanford University
+  - name: Gabriel Bo
+    affiliation: Stanford University
+  - name: Andrew Park
+    affiliation: Stanford University
+  - name: Matthew Hart
+    affiliation: Stanford University
+  - key: caiacostello
+    affiliation: Stanford University
+  - name: Chuan Li
     affiliation: Stanford University
   - name: Christopher Ré
     affiliation: Stanford University
