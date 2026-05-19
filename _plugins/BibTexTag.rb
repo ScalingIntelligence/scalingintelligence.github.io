@@ -22,6 +22,10 @@ module Jekyll
     end
 
     def render(context)
+      # Per-pub override: if front-matter sets bibtex_raw, emit it verbatim.
+      raw = lookup(context, 'page.bibtex_raw')
+      return raw.to_s.strip if raw && !raw.to_s.strip.empty?
+
       # Site
       venues = lookup(context, 'site.data.venues')
       people = lookup(context, 'site.data.people')

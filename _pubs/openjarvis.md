@@ -35,6 +35,16 @@ year: 2026
 date: 2026-03-12
 has_pdf: true
 doi: 10.48550/arXiv.2605.17172
+bibtex_raw: |
+  @misc{saadfalcon2026openjarvispersonalaipersonal,
+        title={OpenJarvis: Personal AI, On Personal Devices},
+        author={Jon Saad-Falcon and Avanika Narayan and Robby Manihani and Tanvir Bhathal and Herumb Shandilya and Hakki Orhun Akengin and Gabriel Bo and Andrew Park and Matthew Hart and Caia Costello and Chuan Li and Christopher Ré and Azalia Mirhoseini},
+        year={2026},
+        eprint={2605.17172},
+        archivePrefix={arXiv},
+        primaryClass={cs.LG},
+        url={https://arxiv.org/abs/2605.17172},
+  }
 tags:
   - machine learning
   - systems
