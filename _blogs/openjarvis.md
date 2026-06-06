@@ -41,7 +41,7 @@ materials:
 <p style="text-align: center;">
 💻 <a href="https://github.com/open-jarvis/OpenJarvis">GitHub</a> &nbsp;|&nbsp;
 📖 <a href="https://open-jarvis.github.io/OpenJarvis/">Docs</a> &nbsp;|&nbsp;
-💬 <a href="https://discord.gg/3DEGU5Ce">Discord</a>
+💬 <a href="https://discord.gg/CMVBmDQ5Fj">Discord</a>
 </p>
 
 <p style="text-align: center;"><strong>🚨 Download OpenJarvis today and top the <a href="https://open-jarvis.github.io/OpenJarvis/leaderboard/">ENERGY leaderboard</a> for a chance to win a Mac Mini! 🚨</strong></p>
@@ -186,7 +186,7 @@ materials:
 
 <li><strong>Developers:</strong> We encourage you to build on top of OpenJarvis and help us understand where the real bottlenecks are. Which use cases matter most? Where does performance fall short? Please visit our <a href="https://github.com/open-jarvis/OpenJarvis">GitHub</a> to get started. We welcome PRs that expand the ecosystem.</li>
 
-<li><strong>Users:</strong> Try it out and tell us what you think. Point it at your files, connect it to your messaging platforms, and let us know what works and what does not. The fastest way to get started is to run <code>pip install openjarvis</code>, then <code>jarvis init</code>. Join us on <a href="https://discord.gg/3DEGU5Ce">discord</a> and share your thoughts!</li>
+<li><strong>Users:</strong> Try it out and tell us what you think. Point it at your files, connect it to your messaging platforms, and let us know what works and what does not. The fastest way to get started is to run <code>pip install openjarvis</code>, then <code>jarvis init</code>. Join us on <a href="https://discord.gg/CMVBmDQ5Fj">discord</a> and share your thoughts!</li>
 </ul>
 
 <p>The fastest way to get started:</p>
@@ -206,7 +206,7 @@ jarvis ask "What is the capital of France?"
 <p>
 💻 <a href="https://github.com/open-jarvis/OpenJarvis">GitHub</a> &nbsp;|&nbsp;
 📖 <a href="https://open-jarvis.github.io/OpenJarvis/">Docs</a> &nbsp;|&nbsp;
-💬 <a href="https://discord.gg/3DEGU5Ce">Discord</a>
+💬 <a href="https://discord.gg/CMVBmDQ5Fj">Discord</a>
 </p>
 
 <hr>
