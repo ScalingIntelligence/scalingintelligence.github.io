@@ -54,6 +54,12 @@ bradleybrown:
   url: https://www.bradbrown.ca/
   title: PhD Student
 
+yuzhenmao:
+  name: Yuzhen Mao
+  url: https://yuzhenmao.github.io/
+  title: PhD Student
+  note: Coadvised with Christos Kozyrakis
+
 
 # Let's put a collaborator section in future PRs
 
