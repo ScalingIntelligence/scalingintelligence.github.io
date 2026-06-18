@@ -47,9 +47,9 @@ Our results showed improvements in both compilation and correctness rates across
 
 # Motivation
 
-The performance of every modern AI workload is bottlenecked by **kernel quality**. Writing high-performance kernels requires deep familiarity with hardware, low-level languages, and optimization techniques that are critically scarce outside NVIDIA's CUDA ecosystem.
+The performance of every modern AI workload is bottlenecked by kernel quality. Writing high-performance kernels requires deep familiarity with hardware, low-level languages, and optimization techniques that are critically scarce outside NVIDIA's CUDA ecosystem.
 
-AMD's HIP is a good example of this deficit. It's a compiler-verified, low-level programming language with comparatively **little open-source training data**, yet it targets accelerators that are increasingly present in production AI clusters. This asymmetry can be empirically observed: SOTA LLMs generally produce fluent CUDA, but when generating HIP the models might hallucinate APIs or emit kernels that appear plausible but fail at compile time or under multi-seed correctness.
+AMD's HIP is a good example of this deficit. It's a compiler-verified, low-level programming language with comparatively little open-source training data, yet it targets accelerators that are increasingly present in production AI clusters. This asymmetry can be empirically observed: SOTA LLMs generally produce fluent CUDA, but when generating HIP the models might hallucinate APIs or emit kernels that appear plausible but fail at compile time or under multi-seed correctness.
 
 ---
 
@@ -389,7 +389,7 @@ class ModelNew(nn.Module):
 
 </details>
 
-The weakest SFT generations attempted the opposite approach. In **Problem 3**, the model began an over-ambitious rewrite of the entire block: it defined separate custom kernels for **ConvTranspose3D**, **LayerNorm**, **AvgPool3D**, and **GELU**, but the generation did not complete the forward method, so the candidate failed before we could evaluate whether the rewritten computation was correct.
+The weakest SFT generations attempted the opposite approach. In **Levek 2 Problem 3**, the model began an over-ambitious rewrite of the entire block: it defined separate custom kernels for ConvTranspose3D, LayerNorm, AvgPool3D, and GELU, but the generation did not complete the forward method, so the candidate failed before we could evaluate whether the rewritten computation was correct.
 
 <details class="kernel-details" markdown="1">
 <summary><strong>Level 2 Problem 3</strong> — ConvTranspose3d_Sum_LayerNorm_AvgPool_GELU </summary>
@@ -714,11 +714,11 @@ class ModelNew(nn.Module):
 </details>
 
 
-RL reinforced the successful patterns that emerged during SFT by rewarding the kernels that survived real **compiler checks** and **hardware execution**. Rather than discovering entirely new optimization techniques, the model learned which modifications were safe to make. Successful RL generations increasingly favored **fusing local operations** such as activations and bias additions while preserving the overall structure of the original computation. The result was a consistent shift toward simpler, more reliable optimizations and substantially higher **compilation rates** across all three KernelBench levels.
+RL reinforced the successful patterns that emerged during SFT by rewarding the kernels that survived real **compiler checks** and **hardware execution**. Rather than discovering entirely new optimization techniques, the model learned which modifications were safe to make. Successful RL generations increasingly favored **fusing local operations** such as activations and bias additions while preserving the overall structure of the original computation. The result was a consistent shift toward simpler, more reliable optimizations and substantially **higher compilation rates** across all three KernelBench levels.
 
 ## Correctness Results
 
-The second metric we looked at is **correctness**: the percent of kernels that both compile and match the original PyTorch reference outputs. Here, we expect to see a jump in correctness between fine tuning and reinforcement learning because correctness is directly part of our reward signal. Interestingly, we see a jump from 13% under SFT to 60% under RL in correctness on **Level 2** KernelBench problems.
+The second metric we looked at is **correctness**: the percent of kernels that both compile and match the original PyTorch reference outputs. Here, we expect to see a jump in correctness between fine tuning and reinforcement learning because correctness is directly part of our reward signal. Interestingly, we see a jump from **13%** under SFT to **60%** under RL in correctness on **Level 2** KernelBench problems.
 
 <div style="display: flex; gap: 16px; align-items: center;">
   <img src="/imgs/blog/hipkernels/Figure_2.png" alt="caption here" style="max-width: 100%; height: auto; display: block;">
@@ -905,198 +905,220 @@ RL directly penalized these mistakes because the reward depends on **correctness
 
 Although RL substantially improved correctness on Level 2 tasks, Level 3 remained challenging. Unlike earlier levels, many Level 3 workloads require preserving the behavior of entire workloads rather than individual operators.
 
-**Level 3 Problem 49** is a good example of this. Problem 49 is a Mamba State-Space Model (SSM) task that computes the final recurrent state of the model after processing an input sequence.
-The generated kernel correctly recognized many concepts associated with Mamba SSMs, including **segmented scans**, **cumulative state updates**, **decay terms**, and **final-state computation**. However, it replaced the true Mamba recurrence with a simplified cumulative-sum implementation. These failures differ fundamentally from the syntax and API errors common in the baseline model.
+**Level 3 Problem 28** is a good example of this. The task implements a Vision Transformer, which divides an image into patches, projects each patch into a learned embedding space, adds position information, and processes the resulting sequence with a Transformer before classification. Although the generated kernel correctly identifies the patch-extraction stage, it never performs a learned patch to embedding transformation. So, instead of sending learned patch embeddings to the Transformer, it sends raw patch values. This failure differs fundamentally from the syntax and API errors common in the baseline model.
 
 <details class="kernel-details" markdown="1">
-<summary><strong>Level 3 Problem 49</strong> — Mamba2ReturnFinalState</summary>
+<summary><strong>Level 3 Problem 28</strong> — VisionTransformer</summary>
 
 ```python
 import os
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from einops import rearrange
 from torch.utils.cpp_extension import load_inline
 
 # Must include this line so PyTorch could use HIP compiler for AMD GPUs
 os.environ["CXX"] = "hipcc"
 
-# Define the HIP kernel for element-wise exponential
-exp_kernel_source = """
+# Custom HIP kernel for patch extraction and linear transformation
+patch_extract_linear_cpp_source = """
 #include <hip/hip_runtime.h>
-#include <cmath> // For expf
+#include <torch/extension.h>
 
-__global__ void exp_kernel(const float* input, float* output, int size) {
+__global__ void patch_extract_linear_kernel(const float* img, float* out, int B, int C, int H, int W, int p, int dim) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
-    if (idx < size) {
-        output[idx] = expf(input[idx]);
+    int total_patches = B * (H / p) * (W / p);
+
+    if (idx < total_patches) {
+        int b_idx = idx / ((H / p) * (W / p));
+        int patch_idx = idx % ((H / p) * (W / p));
+
+        int h_idx = patch_idx / (W / p);
+        int w_idx = patch_idx % (W / p);
+
+        int patch_offset = b_idx * C * H * W + h_idx * p * W * C + w_idx * p * C;
+
+        // Extract patch and perform linear transformation
+        // Each thread processes one element of the patch.
+        for (int c = 0; c < C; ++c) {
+            for (int ph = 0; ph < p; ++ph) {
+                for (int pw = 0; pw < p; ++pw) {
+                    int linear_idx = idx * dim + c * p * p + ph * p + pw;
+                    int img_linear_idx = patch_offset + c * H * W + ph * W + pw;
+                    out[linear_idx] = img[img_linear_idx];
+                }
+            }
+        }
     }
 }
 
-// PyTorch wrapper for the exp_kernel
-torch::Tensor exp_hip(torch::Tensor input) {
-    auto size = input.numel();
-    auto output = torch::empty_like(input);
+torch::Tensor patch_extract_linear_hip(torch::Tensor img, int p, int dim) {
+    // Input validation
+    TORCH_CHECK(img.is_cuda(), "Input tensor must be on GPU");
+    TORCH_CHECK(img.is_floating_point(), "Input tensor must be a floating-point type");
+    TORCH_CHECK(img.dtype() == torch::kFloat32, "Input tensor must be float32");
+    TORCH_CHECK(img.dim() == 4, "Input tensor must be 4-dimensional (B, C, H, W)");
+
+    int B = img.size(0);
+    int C = img.size(1);
+    int H = img.size(2);
+    int W = img.size(3);
+
+    // Calculate the total number of patches
+    int total_patches = B * (H / p) * (W / p);
+
+    // Output tensor shape: (total_patches, dim)
+    auto out = torch::zeros({total_patches, dim}, img.options());
 
     const int block_size = 256;
-    const int num_blocks = (size + block_size - 1) / block_size;
+    const int num_blocks = (total_patches + block_size - 1) / block_size;
 
-    exp_kernel<<<num_blocks, block_size>>>(input.data_ptr<float>(), output.data_ptr<float>(), size);
-
-    return output;
-}
-"""
-
-# Define the HIP kernel for element-wise subtraction
-sub_kernel_source = """
-#include <hip/hip_runtime.h>
-
-__global__ void sub_kernel(const float* a, const float* b, float* out, int size) {
-    int idx = blockIdx.x * blockDim.x + threadIdx.x;
-    if (idx < size) {
-        out[idx] = a[idx] - b[idx];
-    }
-}
-
-// PyTorch wrapper for the sub_kernel
-torch::Tensor sub_hip(torch::Tensor a, torch::Tensor b) {
-    auto size = a.numel();
-    auto out = torch::empty_like(a);
-
-    const int block_size = 256;
-    const int num_blocks = (size + block_size - 1) / block_size;
-
-    sub_kernel<<<num_blocks, block_size>>>(a.data_ptr<float>(), b.data_ptr<float>(), out.data_ptr<float>(), size);
+    patch_extract_linear_kernel<<<num_blocks, block_size>>>(
+        img.data_ptr<float>(),
+        out.data_ptr<float>(),
+        B, C, H, W, p, dim
+    );
 
     return out;
 }
 """
 
-# Define the HIP kernel for element-wise multiplication
-mul_kernel_source = """
+# Custom HIP kernel for adding positional embeddings
+add_pos_embedding_cpp_source = """
 #include <hip/hip_runtime.h>
+#include <torch/extension.h>
 
-__global__ void mul_kernel(const float* a, const float* b, float* out, int size) {
+__global__ void add_pos_embedding_kernel(const float* x, const float* pos_embedding, float* out, int B, int N, int D) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
-    if (idx < size) {
-        out[idx] = a[idx] * b[idx];
+    int total_elements = B * N * D;
+
+    if (idx < total_elements) {
+        int b_idx = idx / (N * D);
+        int n_idx = (idx / D) % N;
+        int d_idx = idx % D;
+
+        // Positional embedding is (1, N+1, D), so we need to offset by 1 for patches (0 is for cls_token)
+        out[idx] = x[idx] + pos_embedding[1 * (N + 1) * D + n_idx * D + d_idx];
     }
 }
 
-// PyTorch wrapper for the mul_kernel
-torch::Tensor mul_hip(torch::Tensor a, torch::Tensor b) {
-    auto size = a.numel();
-    auto out = torch::empty_like(a);
+torch::Tensor add_pos_embedding_hip(torch::Tensor x, torch::Tensor pos_embedding) {
+    // Input validation
+    TORCH_CHECK(x.is_cuda(), "Input tensor 'x' must be on GPU");
+    TORCH_CHECK(pos_embedding.is_cuda(), "Input tensor 'pos_embedding' must be on GPU");
+    TORCH_CHECK(x.is_floating_point(), "Input tensor 'x' must be a floating-point type");
+    TORCH_CHECK(pos_embedding.is_floating_point(), "Input tensor 'pos_embedding' must be a floating-point type");
+    TORCH_CHECK(x.dtype() == torch::kFloat32, "Input tensor 'x' must be float32");
+    TORCH_CHECK(pos_embedding.dtype() == torch::kFloat32, "Input tensor 'pos_embedding' must be float32");
+    TORCH_CHECK(x.dim() == 3, "Input tensor 'x' must be 3-dimensional (B, N, D)");
+    TORCH_CHECK(pos_embedding.dim() == 3, "Input tensor 'pos_embedding' must be 3-dimensional (1, N+1, D)");
+
+    int B = x.size(0);
+    int N = x.size(1);
+    int D = x.size(2);
+
+    // Output tensor shape: (B, N, D)
+    auto out = torch::zeros_like(x);
 
     const int block_size = 256;
-    const int num_blocks = (size + block_size - 1) / block_size;
+    const int num_blocks = (B * N * D + block_size - 1) / block_size;
 
-    mul_kernel<<<num_blocks, block_size>>>(a.data_ptr<float>(), b.data_ptr<float>(), out.data_ptr<float>(), size);
+    add_pos_embedding_kernel<<<num_blocks, block_size>>>(
+        x.data_ptr<float>(),
+        pos_embedding.data_ptr<float>(),
+        out.data_ptr<float>(),
+        B, N, D
+    );
 
     return out;
 }
 """
 
 # Load the custom HIP kernels
-exp_op = load_inline(
-    name="exp_op",
-    cpp_sources=exp_kernel_source,
-    functions=["exp_hip"],
+patch_extract_linear = load_inline(
+    name="patch_extract_linear",
+    cpp_sources=patch_extract_linear_cpp_source,
+    functions=["patch_extract_linear_hip"],
     verbose=True,
 )
 
-sub_op = load_inline(
-    name="sub_op",
-    cpp_sources=sub_kernel_source,
-    functions=["sub_hip"],
-    verbose=True,
-)
-
-mul_op = load_inline(
-    name="mul_op",
-    cpp_sources=mul_kernel_source,
-    functions=["mul_hip"],
+add_pos_embedding = load_inline(
+    name="add_pos_embedding",
+    cpp_sources=add_pos_embedding_cpp_source,
+    functions=["add_pos_embedding_hip"],
     verbose=True,
 )
 
 class ModelNew(nn.Module):
-    def __init__(self, batch_size, seq_length, n_heads, d_head, d_state, block_len=64):
+    def __init__(self, image_size, patch_size, num_classes, dim, depth, heads, mlp_dim, channels=3, dropout=0.1, emb_dropout=0.1):
         """
-        Mamba Structured State Space model implementation for benchmarking.
-        
-        :param batch_size: Size of the batch
-        :param seq_length: Length of the input sequence
-        :param n_heads: Number of attention heads
-        :param d_head: Dimension of each head
-        :param d_state: Dimension of the state space
-        :param block_len: Length of each block for chunked computation
+        Vision Transformer (ViT) model.
+
+        :param image_size: The size of the input image (assumed to be square).
+        :param patch_size: The size of each patch (assumed to be square).
+        :param num_classes: The number of output classes.
+        :param dim: The dimensionality of the embedding space.
+        :param depth: The number of transformer layers.
+        :param heads: The number of attention heads.
+        :param mlp_dim: The dimensionality of the MLP (Multi-Layer Perceptron) in the transformer.
+        :param channels: The number of channels in the input image (default is 3 for RGB).
+        :param dropout: Dropout rate applied in the MLP.
+        :param emb_dropout: Dropout rate applied to the embedded patches.
         """
         super(ModelNew, self).__init__()
         
-        assert seq_length % block_len == 0, "Sequence length must be divisible by block length"
+        assert image_size % patch_size == 0, "Image dimensions must be divisible by the patch size."
+        num_patches = (image_size // patch_size) ** 2
+        patch_dim = channels * patch_size ** 2
         
-        self.batch_size = batch_size
-        self.seq_length = seq_length
-        self.n_heads = n_heads
-        self.d_head = d_head
-        self.d_state = d_state
-        self.block_len = block_len
+        self.patch_size = patch_size
+        self.pos_embedding = nn.Parameter(torch.randn(1, num_patches + 1, dim))
+        self.patch_to_embedding = nn.Linear(patch_dim, dim)
+        self.cls_token = nn.Parameter(torch.randn(1, 1, dim))
+        self.dropout = nn.Dropout(emb_dropout)
         
-        # Initialize parameters
-        self.A = nn.Parameter(torch.randn(batch_size, seq_length, n_heads))
-        self.B = nn.Parameter(torch.randn(batch_size, seq_length, n_heads, d_state))
-        self.C = nn.Parameter(torch.randn(batch_size, seq_length, n_heads, d_state))
+        self.transformer = nn.TransformerEncoder(
+            nn.TransformerEncoderLayer(d_model=dim, nhead=heads, dim_feedforward=mlp_dim, dropout=dropout),
+            num_layers=depth
+        )
         
-        # Store references to the loaded HIP operations
-        self.exp_op = exp_op
-        self.sub_op = sub_op
-        self.mul_op = mul_op
+        self.to_cls_token = nn.Identity()
+        self.mlp_head = nn.Sequential(
+            nn.Linear(dim, mlp_dim),
+            nn.GELU(),
+            nn.Dropout(dropout),
+            nn.Linear(mlp_dim, num_classes)
+        )
     
-    def segsum(self, x):
-        """Naive segment sum calculation."""
-        T = x.size(-1)
-        x_cumsum = torch.cumsum(x, dim=-1)
-        x_segsum = self.sub_op.sub_hip(x_cumsum[..., :, None], x_cumsum[..., None, :])
-        mask = torch.tril(torch.ones(T, T, device=x.device, dtype=bool), diagonal=0)
-        x_segsum = x_segsum.masked_fill(~mask, -torch.inf)
-        return x_segsum
-    
-    def forward(self, X, initial_states=None):
+    def forward(self, img):
         """
-        Forward pass implementing the SSD operation.
-        
-        :param X: Input tensor of shape (batch, length, n_heads, d_head)
-        :param initial_states: Optional initial states
-        :return: Output tensor Y and final state
+        Forward pass of the Vision Transformer.
+
+        :param img: The input image tensor, shape (batch_size, channels, image_size, image_size).
+        :return: The output tensor, shape (batch_size, num_classes).
         """
-        # Rearrange into blocks/chunks
-        X_blocks, A_blocks, B_blocks, C_blocks = [
-            rearrange(x, "b (c l) ... -> b c l ...", l=self.block_len)
-            for x in (X, self.A, self.B, self.C)
-        ]
+        p = self.patch_size
         
-        A_blocks = rearrange(A_blocks, "b c l h -> b h c l")
-        A_cumsum = torch.cumsum(A_blocks, dim=-1)
+        # Use custom HIP kernel for patch extraction and linear transformation
+        x = patch_extract_linear.patch_extract_linear_hip(img, p, self.patch_to_embedding.out_features)
         
-        # 1. Compute diagonal block outputs
-        L = self.exp_op.exp_hip(self.segsum(A_blocks))
-        Y_diag = torch.einsum("bclhn,bcshn,bhcls,bcshp->bclhp", 
-                             C_blocks, B_blocks, L, X_blocks)
+        # Add class token
+        cls_tokens = self.cls_token.expand(img.shape[0], -1, -1)
+        x = torch.cat((cls_tokens, x), dim=1)
         
-        # 2. Compute intra-chunk states
-        decay_states = self.exp_op.exp_hip(self.sub_op.sub_hip(A_cumsum[:, :, :, -1:], A_cumsum))
-        states = torch.einsum("bclhn,bhcl,bclhp->bchpn", 
-                            B_blocks, decay_states, X_blocks)
+        # Use custom HIP kernel for adding positional embeddings
+        x = add_pos_embedding.add_pos_embedding_hip(x, self.pos_embedding)
         
-        # 3. Compute inter-chunk recurrence
-        if initial_states is None:
-            initial_states = torch.zeros_like(states[:, :1])
-        states = torch.cat([initial_states, states], dim=1)
+        x = self.dropout(x)
         
-        decay_chunk = self.exp_op.exp_hip(self.segsum(F.pad(A_cumsum[:, :, :, -1], (1, 0))))
-        new_states = torch.einsum("bhzc,bchpn->bzhpn", decay_chunk, states)
-        return new_states[:, -1]
+        # PyTorch's nn.TransformerEncoder expects input shape (N, S, E)
+        # where N is the batch size, S is the sequence length, and E is the embedding dimension.
+        # Our x is already in this format (B, N+1, D).
+        x = self.transformer(x)
+        
+        # Extract the cls_token representation
+        x = self.to_cls_token(x[:, 0])
+        return self.mlp_head(x)
 ```
 
 </details>
@@ -1131,13 +1153,13 @@ Across all levels and experiments, we observed several recurring GPU optimizatio
 
 While RL improved compilation and correctness, meaningful performance gains remained difficult to achieve. The figure reports **fastp**, the fraction of correct kernels achieving at least a p-times speedup over the PyTorch baseline ([Ouyang et al., 2025](https://arxiv.org/abs/2502.10517)).
 
-The strongest results occurred on **Level 2**, where roughly **60%** of correct kernels matched PyTorch performance and over half achieved at least a **0.5×** speedup over PyTorch baselines. However, the fraction of kernels achieving larger speedups dropped rapidly across all levels. Very few kernels exceeded the PyTorch baseline by a full 1× speedup, and essentially none achieved large performance improvements.
+The strongest results occurred on **Level 2**, where roughly **60%** of correct kernels matched PyTorch performance and over half achieved at least a **0.5×** speedup over PyTorch baselines. However, the fraction of kernels achieving larger speedups dropped rapidly across all levels. No kernels achieved large performance improvements.
 
 This behavior is consistent with what we observed in the generated kernels. Both SFT and RL learned **local optimization strategies**. Rather than replacing expensive operators, the generated kernels typically fused only the surrounding elementwise computation. This improved correctness and reduced overhead, but left the dominant computational cost of the workload in PyTorch, limiting any meaningful performance gain.
 
 ## Comparison to Prior Work
 
-Comparing HIP kernel generation systems remains challenging because there is no widely adopted **benchmark** or **evaluation protocol**. Existing studies differ substantially in benchmark size, task construction, hardware platforms, and evaluation methodology, making direct numerical comparisons difficult.
+Comparing HIP kernel generation systems remains challenging because there is no widely adopted benchmark or evaluation protocol. Existing studies differ substantially in benchmark size, task construction, hardware platforms, and evaluation methodology, making direct numerical comparisons difficult.
 
 To our knowledge, only a limited number of works report compilation, correctness, and performance metrics for HIP kernel generation on KernelBench tasks. Recent work by **AMD** evaluates PyTorch-to-HIP translation on a curated benchmark of only 24 tasks sourced from the GPU Mode community and reports strong compilation, correctness, and runtime performance ([Younesian et al., 2026](https://arxiv.org/pdf/2605.16819)). Separately, **KernelArena** reports results on a 41-problem KernelBench-HIP subset and achieves a median speedup of 1.37x with Opus 4.5. Importantly, both of these works focus on **SOTA models** and different AMD GPUs. 
 
