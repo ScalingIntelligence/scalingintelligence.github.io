@@ -4,37 +4,17 @@ azaliamirhoseini:
   title: Assistant Professor
 
 # PhDs
-jordanjuravsky:
-  name: Jordan Juravsky
-  url: https://www.jordanjuravsky.com/
-  title: PhD Student
-  note: On Leave at Meta Superintelligence Lab
-  on_leave: true
-
 jonsaadfalcon:
   name: Jon Saad-Falcon
   url: https://jonsaadfalcon.com/
   title: PhD Student
   note: Coadvised with Christopher Ré
 
-
 shayantalaei:
   name: Shayan Talaei
   url: https://www.linkedin.com/in/shayan-talaei-6b65a0229/
   title: PhD Student
   note: Coadvised with Amin Saberi
-
-anneouyang:
-  name: Anne Ouyang
-  url: https://anneouyang.com/
-  title: PhD Student
-  note: On Leave at Standard Kernel Co.
-  on_leave: true
-
-simonguo:
-  name: Simon Guo
-  url: https://simonguo.tech/
-  title: PhD Student
 
 jackykwok:
   name: Jacky Kwok
@@ -48,17 +28,32 @@ hermannkumbong:
   title: PhD Student
   note: Coadvised with Christopher Ré
 
-
-bradleybrown:
-  name: Bradley Brown
-  url: https://www.bradbrown.ca/
-  title: PhD Student
-
 yuzhenmao:
   name: Yuzhen Mao
   url: https://yuzhenmao.github.io/
   title: PhD Student
   note: Coadvised with Christos Kozyrakis
+
+simonguo:
+  name: Simon Guo
+  url: https://simonguo.tech/
+  title: PhD Student
+  note: On Leave at Thinking Machines
+
+# On leave
+jordanjuravsky:
+  name: Jordan Juravsky
+  url: https://www.jordanjuravsky.com/
+  title: PhD Student
+  note: On Leave at Meta Superintelligence Lab
+  on_leave: true
+
+anneouyang:
+  name: Anne Ouyang
+  url: https://anneouyang.com/
+  title: PhD Student
+  note: On Leave at Standard Kernel Co.
+  on_leave: true
 
 
 # Let's put a collaborator section in future PRs
@@ -212,6 +207,13 @@ aakankshash:
     not_current: True
 
 # Alumni
+
+bradleybrown:
+  name: Bradley Brown
+  url: https://www.bradbrown.ca/
+  title: Researcher
+  alumni: true
+  next: Meta Superintelligence Lab
 
 #example:
 #  name: 
