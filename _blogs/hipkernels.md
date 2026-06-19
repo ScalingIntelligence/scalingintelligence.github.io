@@ -389,7 +389,7 @@ class ModelNew(nn.Module):
 
 </details>
 
-The weakest SFT generations attempted the opposite approach. In **Levek 2 Problem 3**, the model began an over-ambitious rewrite of the entire block: it defined separate custom kernels for ConvTranspose3D, LayerNorm, AvgPool3D, and GELU, but the generation did not complete the forward method, so the candidate failed before we could evaluate whether the rewritten computation was correct.
+The weakest SFT generations attempted the opposite approach. In **Level 2 Problem 3**, the model began an over-ambitious rewrite of the entire block: it defined separate custom kernels for ConvTranspose3D, LayerNorm, AvgPool3D, and GELU, but the generation did not complete the forward method, so the candidate failed before we could evaluate whether the rewritten computation was correct.
 
 <details class="kernel-details" markdown="1">
 <summary><strong>Level 2 Problem 3</strong> — ConvTranspose3d_Sum_LayerNorm_AvgPool_GELU </summary>
