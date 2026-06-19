@@ -61,7 +61,7 @@ Our approach is as follows:
 
 ## 1. Synthetic Data Generation
 
-We generate a corpus of verified HIP kernels paired with PyTorch references using a **multi-agent pipeline**. The pipeline has eight cooperating agents:
+We generate a corpus of verified HIP kernels paired with PyTorch references using a **multi-agent pipeline** with Gemini-2.5-Flash. The pipeline has eight cooperating agents:
 
 <div style="display: flex; gap: 16px; align-items: center;">
   <img src="/imgs/blog/hipkernels/agents.png" alt="caption here" style="max-width: 100%; height: auto; display: block;">
@@ -69,7 +69,7 @@ We generate a corpus of verified HIP kernels paired with PyTorch references usin
 
 **Task Generator**: Wraps a PyTorch reference into a structured task and synthesizes new reference modules via mutation\*, composition\*, and constraint-based generation\*, with each synthesized module sanity-checked before entering the pipeline. 
 
-**Translator**: Produces the first working HIP kernel from the PyTorch reference, retrying with the verifier’s error and the previous attempt fed back into the prompt.
+**Translator**: Produces the first working HIP kernel from the PyTorch reference, retrying with the verifier’s error and the previous attempt fed back into the prompt. For each synthetic data task, the agent produced a correct kernel within five attempts. 
 
 **Correctness Verifier**: The deterministic correctness gate that rejects shortcut patterns and runs the candidate against the PyTorch reference across multiple seeds.
 
@@ -1170,6 +1170,10 @@ While these results provide useful points of reference, they are not directly co
 # Conclusion
 
 We find that **synthetic kernel generation**, **multi-agent evolutionary search**, and **SFT** followed by **GRPO-based RL** deliver meaningful gains in HIP kernel compilation and correctness on a small open-source model, with RL contributing the largest jump. Speedup over PyTorch remains the harder objective, since correctness alone does not force the model to necessarily reason about the hardware. Pulling ROCm profiler signals into the reward, allowing the model to learn where its kernels are slow or inefficient, is a natural next step for exploration.
+
+
+# Future Works
+Another important direction is understanding how performance scales with larger synthetic datasets such as identifying whether compilation and correctness continue to improve with additional synthetic data. We are also interested in failure-driven post-training. One promising direction is to use stronger models with test-time scaling to repeatedly attempt failed problems and add successful solutions back into the training datasets. 
 
 ---
 
