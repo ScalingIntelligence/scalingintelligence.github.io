@@ -18,7 +18,7 @@ authors:
 venue: none
 year: 2026
 date: 2026-04-10
-redirect: https://llm-as-a-verifier.notion.site/
+redirect: https://llm-as-a-verifier.com
 tags:
   - machine learning
   - generative ai
@@ -26,7 +26,7 @@ tags:
 teaser: "LLM-as-a-Verifier is a general-purpose verification framework that provides fine-grained feedback by scaling scoring granularity, repeated verification, and criteria decomposition"
 materials:
   - name: Blog
-    url: https://llm-as-a-verifier.notion.site/
+    url: https://llm-as-a-verifier.com
     type: link
   - name: Codebase
     url: https://github.com/llm-as-a-verifier/llm-as-a-verifier
