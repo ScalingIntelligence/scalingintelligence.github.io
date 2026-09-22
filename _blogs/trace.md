@@ -4,7 +4,7 @@ authors:
   - key: hangookang
     equal: true
     affiliation: Stanford
-  - name: Tarun Suresh
+  - key: tarunsuresh
     equal: true
     affiliation: Stanford
   - key: jonsaadfalcon
