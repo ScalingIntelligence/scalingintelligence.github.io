@@ -3,7 +3,7 @@ title: 'TRACE: Capability-Targeted Agentic Training'
 authors:
   - key: hangookang
     equal: true
-  - name: Tarun Suresh
+  - key: tarunsuresh
     equal: true
   - key: jonsaadfalcon
   - key: azaliamirhoseini

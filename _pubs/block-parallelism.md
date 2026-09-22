@@ -1,7 +1,7 @@
 ---
 title: 'Block Parallelism For Efficient Distributed Long-Context Diffusion Language Model Training'
 authors:
-  - name: Tarun Suresh
+  - key: tarunsuresh
     equal: true
     affiliation: Stanford University
   - name: Pranshu Chaturvedi
