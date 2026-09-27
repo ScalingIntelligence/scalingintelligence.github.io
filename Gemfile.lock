@@ -3,8 +3,10 @@ GEM
   specs:
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
+    base64 (0.3.0)
     bibtex-ruby (4.4.7)
       latex-decode (~> 0.0)
+    bigdecimal (4.1.3)
     citeproc (1.0.10)
       namae (~> 1.0)
     citeproc-ruby (1.1.14)
@@ -17,14 +19,15 @@ GEM
       rexml
     csl-styles (1.0.1.11)
       csl (~> 1.0)
+    csv (3.3.6)
     em-websocket (0.5.3)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0)
     eventmachine (1.2.7)
-    ffi (1.17.0-arm64-darwin)
-    ffi (1.17.0-x64-mingw-ucrt)
-    ffi (1.17.0-x86_64-darwin)
-    ffi (1.17.0-x86_64-linux-gnu)
+    ffi (1.17.4-arm64-darwin)
+    ffi (1.17.4-x64-mingw-ucrt)
+    ffi (1.17.4-x86_64-darwin)
+    ffi (1.17.4-x86_64-linux-gnu)
     forwardable-extended (2.6.0)
     htmlbeautifier (1.4.2)
     http_parser.rb (0.8.0)
@@ -72,14 +75,15 @@ GEM
     logger (1.6.5)
     mercenary (0.4.0)
     namae (1.1.1)
-    nokogiri (1.18.2-arm64-darwin)
+    nokogiri (1.19.4-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.18.2-x64-mingw-ucrt)
+    nokogiri (1.19.4-x64-mingw-ucrt)
       racc (~> 1.4)
-    nokogiri (1.18.2-x86_64-darwin)
+    nokogiri (1.19.4-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.18.2-x86_64-linux-gnu)
+    nokogiri (1.19.4-x86_64-linux-gnu)
       racc (~> 1.4)
+    observer (0.1.2)
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
     public_suffix (6.0.1)
@@ -116,6 +120,9 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  base64
+  bigdecimal
+  csv
   htmlbeautifier
   jekyll (~> 4.2.0)
   jekyll-feed (~> 0.12)
@@ -124,6 +131,7 @@ DEPENDENCIES
   jekyll-sitemap
   logger
   nokogiri (~> 1.16)
+  observer
   tzinfo (~> 1.2)
   tzinfo-data
   wdm (~> 0.1.1)

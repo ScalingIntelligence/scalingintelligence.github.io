@@ -44,13 +44,14 @@ tarunsuresh:
   url: https://tarsur909.github.io/
   title: PhD Student
 
+# On leave
 simonguo:
   name: Simon Guo
   url: https://simonguo.tech/
   title: PhD Student
   note: On Leave at Thinking Machines
+  on_leave: true
 
-# On leave
 jordanjuravsky:
   name: Jordan Juravsky
   url: https://www.jordanjuravsky.com/

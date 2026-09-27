@@ -37,3 +37,9 @@ gem "nokogiri", "~> 1.16"
 gem "webrick"
 gem "htmlbeautifier"
 gem "logger"
+
+# No longer default gems as of Ruby 3.4+/4.0, but still required by jekyll 4.2 and its plugins
+gem "csv"
+gem "base64"
+gem "bigdecimal"
+gem "observer"
