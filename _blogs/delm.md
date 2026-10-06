@@ -3,6 +3,14 @@ title: 'Decentralized Multi-Agent Systems with Shared Context'
 authors:
   - key: yuzhenmao
     affiliation: Stanford University
+  - name: Jerry Gu
+    affiliation: Stanford University
+  - name: Aadi Chauhan
+    affiliation: Stanford University
+  - name: Qizheng Zhang
+    affiliation: Stanford University
+  - key: hangookang
+    affiliation: Stanford University
   - key: azaliamirhoseini
     affiliation: Stanford University
 tags:
@@ -11,7 +19,7 @@ tags:
 venue: none
 year: 2026
 date: 2026-06-09
-teaser: "DeLM replaces centralized orchestration with a shared, verified context and a task queue, letting parallel agents asynchronously accumulate reusable progress for scalable, reliable, and cost-efficient test-time reasoning."
+teaser: "DeLM replaces the main agent with a shared context and a task queue, letting parallel agents asynchronously claim tasks, publish findings, and build on one another's progress, making long-horizon agents both more accurate and faster."
 redirect: https://yuzhenmao.github.io/DeLM/
 materials:
   - name: Paper
