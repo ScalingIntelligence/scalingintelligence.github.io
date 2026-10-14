@@ -31,7 +31,7 @@ materials:
     url: https://scalingintelligence.stanford.edu/blogs/ncm/
     type: link
   - name: Paper
-    url: https://www.alphaxiv.org/pdf/2610.next-concept-modeling-parallel-generation
+    url: https://arxiv.org/abs/2610.14162
     type: file-pdf
   - name: Codebase
     url: https://github.com/HazyResearch/ncm
@@ -428,7 +428,7 @@ In **Stage 1**, we train a multiscale tokenizer to represent text as a coarse-to
   <img src="/imgs/blog/ncm/stage-1.svg" alt="Stage 1: learning a multiscale tokenizer that converts text into coarse-to-fine residual codes." style="width: 100%; height: auto;">
 </div>
 
-In **Stage 2**, we freeze the tokenizer and train a transformer to predict each level from the cumulative reconstruction of earlier levels. We train on all levels in **a single forward pass** and corrupt a fraction of conditioning codes to improve robustness to generation errors. At inference, the model generates one level at a time, predicting **all codes within each level in parallel**. The tokenizer's decoder then converts the completed hierarchy into text. We provide additional details in [our paper](https://www.alphaxiv.org/pdf/2610.next-concept-modeling-parallel-generation).
+In **Stage 2**, we freeze the tokenizer and train a transformer to predict each level from the cumulative reconstruction of earlier levels. We train on all levels in **a single forward pass** and corrupt a fraction of conditioning codes to improve robustness to generation errors. At inference, the model generates one level at a time, predicting **all codes within each level in parallel**. The tokenizer's decoder then converts the completed hierarchy into text. We provide additional details in [our paper](https://arxiv.org/abs/2610.14162).
 
 <div style="text-align: center;">
   <img src="/imgs/blog/ncm/stage-2.svg" alt="Stage 2: learning to generate each concept level from cumulative reconstructions of earlier levels." style="width: 100%; height: auto;">
