@@ -88,12 +88,40 @@ ryanehrlich:
   alumni: true
   next: Meta Superintelligence Lab
 
-# Masters
+# Masters & Undergraduates
+
+hangookang:
+  name: Hangoo Kang
+  url: https://hgkang02.github.io/
+  title: Master's Researcher
+
+ishankhare:
+  name: Ishan Khare
+  url: http://iskhare.github.io
+  title: Master's Researcher
+  affiliation: Stanford University
+
+iddahmlauzi:
+  name: Iddah Mlauzi
+  url: https://www.linkedin.com/in/iddah-mlauzi
+  title: Master's Researcher
+
+agambhatia:
+  name: Agam Bhatia
+  url: http://agu18dec.github.io/
+  title: Undergraduate Student
+
+tanvirbhathal:
+  name: Tanvir Bhathal
+  url: https://www.linkedin.com/in/tanvir-bhathal/
+  title: Undergraduate Student
 
 williamhu:
   name: William Hu
   url: https://www.linkedin.com/in/williamh20/
   title: Master's Researcher
+  alumni: true
+  next: Modal Labs
 
 shloknatarajan:
   name: Shlok Natarajan
@@ -106,8 +134,6 @@ brendanmclaughlin:
   title: Master's Researcher
   alumni: true
   next: Reflection AI
-
-# Undergrads
 
 julianreed:
   name: Julian Reed
@@ -129,20 +155,9 @@ annmariaantony:
   url: https://www.annmariaantony.com
   title: Undergraduate Student 
 
-hangookang:
-  name: Hangoo Kang
-  url: https://hgkang02.github.io/
-  title: Master's Researcher
-
-
 robbymanihani:
   name: Robby Manihani
   url: https://www.linkedin.com/in/grmanihani/
-  title: Undergraduate Student
-
-tanvirbhathal:
-  name: Tanvir Bhathal
-  url: https://www.linkedin.com/in/tanvir-bhathal/
   title: Undergraduate Student
 
 caiacostello:
@@ -155,7 +170,9 @@ caiacostello:
 adriangamarralafuente:
   name: Adrian Gamarra Lafuente
   url: https://www.linkedin.com/in/adrian-gamarra/
-  title: Undergraduate Student
+  title: Master's Researcher
+  alumni: true
+  next: Salesforce
 
 nataliakokoromyti:
   name: Natalia Kokoromyti
@@ -170,11 +187,6 @@ soksereysun:
 kesavanramakrishnan:
   name: Kesavan Ramakrishnan
   url: https://www.linkedin.com/in/kesavan-ramakrishnan/
-  title: Undergraduate Student
-
-agambhatia:
-  name: Agam Bhatia
-  url: http://agu18dec.github.io/
   title: Undergraduate Student
 
 herumbshandilya:

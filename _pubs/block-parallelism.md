@@ -12,8 +12,8 @@ authors:
     affiliation: Stanford University
   - name: Parth Shroff
     affiliation: Stanford University
-  - name: Ishan S. Khare
-    affiliation: Stanford University
+  - key: ishankhare
+    name: Ishan S. Khare
   - key: hermannkumbong
     affiliation: Stanford University
   - key: azaliamirhoseini
