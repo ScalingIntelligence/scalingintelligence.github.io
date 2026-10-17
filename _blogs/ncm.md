@@ -4,10 +4,9 @@ authors:
   - key: hermannkumbong
     equal: true
     affiliation: Stanford University
-  - name: Ishan S. Khare
-    url: https://iskhare.github.io/
+  - key: ishankhare
+    name: Ishan S. Khare
     equal: true
-    affiliation: Stanford University
   - name: Simran Arora
     url: https://arorasimran.com/
     advisor: true
